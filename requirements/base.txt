@@ -1,5 +1,11 @@
+# require lib
+
 psycopg2-binary
 click
+peewee
+
+
+# test, check lib
 
 pytest
 coverage

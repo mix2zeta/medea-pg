@@ -1,7 +1,9 @@
 import sys
+
+from conf import setting
 from psycopg2 import connect
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-from conf import setting
+
 
 def init_app_db():
     print('init db')
@@ -11,7 +13,6 @@ def init_app_db():
         curr.execute(f'DROP DATABASE IF EXISTS "{setting.PGDBNAME}"')
         curr.execute(f'CREATE DATABASE "{setting.PGDBNAME}"')
         curr.execute(f'CREATE SCHEMA IF NOT EXISTS medea')
-        # curr.commit()
         curr.execute('''
         CREATE TABLE medea.migration (
             id SERIAL,
@@ -21,4 +22,3 @@ def init_app_db():
         );
         ''')
         curr.close()
-    # connection.close()
