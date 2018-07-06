@@ -1,0 +1,31 @@
+version: '3'
+services:
+  pg-db:
+    image: postgres:10.3
+    container_name: pg-db
+    # ports:
+    #   - "9432:5432"
+    volumes:
+      - "./postgres/data:/var/lib/postgresql/data"
+    networks:
+      - base-network
+    logging:
+      options:
+        max-size: 10m
+        max-file: "10"
+  pgweb:
+    container_name: pgweb  # optional
+    # restart: always  # optional
+    image: sosedoff/pgweb
+    ports: 
+      - "1234:8081" 
+    networks:
+      - base-network
+    environment:
+      - DATABASE_URL=postgres://postgres@pg-db:5432/default?sslmode=disable
+    depends_on:
+      - pg-db  # my database container is called postgres, not db
+networks:
+  base-network:
+    external:
+      name: base-network

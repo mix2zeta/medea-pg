@@ -1,1 +1,25 @@
-version '3'
+version: '3'
+services:
+  medea-run:
+    image: mix2zeta/medea
+    build: .
+    container_name: medea
+    command: "python3 /usr/src/medea/app.py"
+    working_dir: "/usr/src"
+    volumes:
+      - "./:/usr/src/"
+    networks:
+      - base-network
+    environment:
+      - PYTHONPATH=/usr/src/medea
+      - PGHOST=pg-db
+      - PGDBNAME=default
+      - PGUSER=hotnow
+    logging:
+      options:
+        max-size: 10m
+        max-file: "10"
+networks:
+  base-network:
+    external:
+      name: base-network
